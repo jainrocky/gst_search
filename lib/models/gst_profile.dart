@@ -15,7 +15,7 @@ class GSTProfile {
   GSTProfile.fromJson(Map<String, dynamic> map)
       : gstNumber = map['gstNumber'],
         name = map['name'],
-        status = map['status'],
+        status = map['gstStatus'],
         principlePlace = map['principlePlace'],
         taxPayerType = map['taxPayerType'],
         constitutionOfBusiness = map['constitutionOfBusiness'],
