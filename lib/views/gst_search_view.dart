@@ -13,6 +13,7 @@ class GSTSearchView extends StatefulWidget{
 class _GSTSearchViewState extends State<GSTSearchView>{
 
   TextEditingController _gstNumberController=TextEditingController();
+  bool _requestApi=false;
   Map<String, String> _errors = {};
 
   @override
@@ -113,6 +114,7 @@ class _GSTSearchViewState extends State<GSTSearchView>{
                       Container(
                         child: TextButton(
                           onPressed: ()async{
+                            FocusScope.of(context).unfocus();
                             String gstNumber=_gstNumberController.text;
                             if(gstNumber.isEmpty){
                               setState(() {
@@ -121,8 +123,13 @@ class _GSTSearchViewState extends State<GSTSearchView>{
                               return;
                             }
                             else _errors['gstNumberError']=null;
-
+                            setState(() {
+                              _requestApi=true;
+                            });
                             var result=await GSTApi.getGSTProfileByGSTNumber(gstNumber);
+                            setState(() {
+                              _requestApi=false;
+                            });
                             // print(result.name);
                             if(result==null){
                               //flutter toast message
@@ -132,7 +139,9 @@ class _GSTSearchViewState extends State<GSTSearchView>{
                             _gstNumberController.clear();
                             Navigator.pushNamed(context, GSTResultView.routeName, arguments: result);
                           },
-                          child: Text("Search", style: TextStyle(color: Colors.white, fontWeight: FontWeight.values[4], fontSize: 18),),
+                          child: _requestApi?Center(
+                            child: CircularProgressIndicator(strokeWidth: 1, valueColor: Colors.white,),
+                          ):Text("Search", style: TextStyle(color: Colors.white, fontWeight: FontWeight.values[4], fontSize: 18),),
                           style: TextButton.styleFrom(
                             textStyle: TextStyle(
                             ),

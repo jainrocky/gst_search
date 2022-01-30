@@ -15,9 +15,7 @@ class GSTResultView extends StatelessWidget{
         height: 56,
         width:MediaQuery.of(context).size.width,
         child: TextButton(
-          onPressed: (){
-            print("DATETIME: "+ DateTime(2017, 7, 1).toIso8601String());
-          },
+          onPressed: (){},
           style: TextButton.styleFrom(
             backgroundColor: Colors.green,
           ),
@@ -87,15 +85,15 @@ class GSTResultView extends StatelessWidget{
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(right: 4),
+                                margin: EdgeInsets.only(right: 8),
                                 height: 8,
                                 width: 8,
                                 decoration: BoxDecoration(
-                                  color: profile.status=='ACTIVE'?Colors.green:Colors.red,
+                                  color: profile.status=='ACTIVE'?Colors.green[900]:Colors.red,
                                   borderRadius: BorderRadius.all(Radius.circular(10))
                                 ),
                               ),
-                              Text('${profile.status??''}', style: TextStyle(color: profile.status=='ACTIVE'?Colors.green:Colors.red, fontWeight: FontWeight.bold),)
+                              Text('${profile.status??''}', style: TextStyle(color: profile.status=='ACTIVE'?Colors.green[900]:Colors.red, fontWeight: FontWeight.bold),)
                             ],
                           ),
                         ),
@@ -222,14 +220,14 @@ class GSTResultView extends StatelessWidget{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Date of Registration', style: TextStyle(color: Colors.grey, fontSize: 12),),
-                          Text('${profile.dateOfRegistration??'--'}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text('${(profile.dateOfRegistration?.toIso8601String()??'--').split('T')[0]}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Date of Cancellation', style: TextStyle(color: Colors.grey, fontSize: 12),),
-                          Text('${profile.dateOfCancellation??'--'}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text('${(profile.dateOfCancellation?.toIso8601String()??'--').split('T')[0]}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                         ],
                       ),
                     ],
